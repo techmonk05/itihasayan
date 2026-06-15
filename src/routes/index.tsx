@@ -271,8 +271,8 @@ function FlamePattern() {
           <path
             key={i}
             d="M100 30 Q 130 90 100 170 Q 70 90 100 30 Z"
-            transform={`rotate(${i * 60} 100 100) scale(${1 - i * 0.12}) translate(0 ${i * 6})`}
-            transform-origin="100 100"
+            transform={`rotate(${i * 60} 100 100) scale(${1 - i * 0.12})`}
+            style={{ transformOrigin: "100px 100px" }}
           />
         ))}
       </g>
