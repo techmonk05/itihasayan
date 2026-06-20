@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import type { Epic } from "../lib/content";
+import type { DbEpic } from "../lib/supabase";
 import { patternComponents } from "./patterns";
 
 export function PillTag({
@@ -40,13 +39,20 @@ export function SectionHeading({
   );
 }
 
-export function EpicCard({ epic, delayMs = 0 }: { epic: Epic; delayMs?: number }) {
+export function EpicCard({
+  epic,
+  delayMs = 0,
+  onClick,
+}: {
+  epic: DbEpic;
+  delayMs?: number;
+  onClick?: () => void;
+}) {
   const Pattern = patternComponents[epic.pattern];
   return (
-    <Link
-      to="/epics/$slug"
-      params={{ slug: epic.slug }}
-      className="group relative block overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-card transition duration-500 hover:-translate-y-2 hover:border-gold/60 hover:shadow-glow"
+    <button
+      onClick={onClick}
+      className="group relative block w-full overflow-hidden rounded-3xl border border-border bg-card p-8 shadow-card transition duration-500 hover:-translate-y-2 hover:border-gold/60 hover:shadow-glow text-left"
       style={{ transitionDelay: `${delayMs}ms` }}
     >
       <Pattern />
@@ -60,6 +66,6 @@ export function EpicCard({ epic, delayMs = 0 }: { epic: Epic; delayMs?: number }
         </p>
       </div>
       <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-transparent transition group-hover:ring-saffron/30" />
-    </Link>
+    </button>
   );
 }

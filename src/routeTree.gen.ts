@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WisdomRouteImport } from './routes/wisdom'
 import { Route as EpicsRouteImport } from './routes/epics'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EpicsSlugRouteImport } from './routes/epics/$slug'
@@ -23,6 +24,11 @@ const WisdomRoute = WisdomRouteImport.update({
 const EpicsRoute = EpicsRouteImport.update({
   id: '/epics',
   path: '/epics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -44,6 +50,7 @@ const EpicsSlugRoute = EpicsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/epics': typeof EpicsRouteWithChildren
   '/wisdom': typeof WisdomRoute
   '/epics/$slug': typeof EpicsSlugRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/epics': typeof EpicsRouteWithChildren
   '/wisdom': typeof WisdomRoute
   '/epics/$slug': typeof EpicsSlugRoute
@@ -59,21 +67,30 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/epics': typeof EpicsRouteWithChildren
   '/wisdom': typeof WisdomRoute
   '/epics/$slug': typeof EpicsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
+  fullPaths: '/' | '/about' | '/admin' | '/epics' | '/wisdom' | '/epics/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
-  id: '__root__' | '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
+  to: '/' | '/about' | '/admin' | '/epics' | '/wisdom' | '/epics/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/admin'
+    | '/epics'
+    | '/wisdom'
+    | '/epics/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
   EpicsRoute: typeof EpicsRouteWithChildren
   WisdomRoute: typeof WisdomRoute
 }
@@ -92,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/epics'
       fullPath: '/epics'
       preLoaderRoute: typeof EpicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -131,6 +155,7 @@ const EpicsRouteWithChildren = EpicsRoute._addFileChildren(EpicsRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
   EpicsRoute: EpicsRouteWithChildren,
   WisdomRoute: WisdomRoute,
 }

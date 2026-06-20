@@ -2,9 +2,17 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { SectionHeading } from "../components/shared";
-import { wisdomSayings } from "../lib/content";
+import { supabase, type DbWisdomSaying } from "../lib/supabase";
 
 export const Route = createFileRoute("/wisdom")({
+  loader: async (): Promise<DbWisdomSaying[]> => {
+    const { data, error } = await supabase
+      .from("wisdom_sayings")
+      .select("*")
+      .order("created_at");
+    if (error) throw error;
+    return data ?? [];
+  },
   head: () => ({
     meta: [
       { title: "Wisdom — Itihasayan" },
@@ -18,6 +26,7 @@ export const Route = createFileRoute("/wisdom")({
 });
 
 function WisdomPage() {
+  const wisdomSayings = Route.useLoaderData();
   return (
     <div className="min-h-screen bg-background">
       <Nav />

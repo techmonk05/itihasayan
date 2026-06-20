@@ -1,14 +1,19 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { Nav } from "../../components/Nav";
 import { Footer } from "../../components/Footer";
-import { epics } from "../../lib/content";
+import { supabase, type DbEpic } from "../../lib/supabase";
 import { patternComponents } from "../../components/patterns";
 
 export const Route = createFileRoute("/epics/$slug")({
-  loader: ({ params }) => {
-    const epic = epics.find((e) => e.slug === params.slug);
-    if (!epic) throw notFound();
-    return epic;
+  loader: async ({ params }): Promise<DbEpic> => {
+    const { data, error } = await supabase
+      .from("epics")
+      .select("*")
+      .eq("slug", params.slug)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) throw notFound();
+    return data;
   },
   head: ({ loaderData }) => ({
     meta: loaderData
