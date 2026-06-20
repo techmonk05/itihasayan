@@ -134,13 +134,3 @@
 .animate-rotate-slow { animation: rotate-slow 120s linear infinite; }
 .animate-float-up { animation: float-up linear infinite; }
 .animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
-}
-.reveal.in {
-  opacity: 1;
-  transform: translateY(0);
-}

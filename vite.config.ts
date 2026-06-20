@@ -12,4 +12,18 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  vite: {
+    // use-sync-external-store ships CJS shims; tell Vite to pre-bundle them so
+    // both the client and the SSR runner get a proper ESM module instead of
+    // hitting Node 22's strict-ESM subpath resolution.
+    optimizeDeps: {
+      include: [
+        "use-sync-external-store/shim/with-selector",
+        "use-sync-external-store",
+      ],
+    },
+    ssr: {
+      noExternal: ["use-sync-external-store"],
+    },
+  },
 });

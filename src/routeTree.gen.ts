@@ -9,38 +9,98 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WisdomRouteImport } from './routes/wisdom'
+import { Route as EpicsRouteImport } from './routes/epics'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EpicsSlugRouteImport } from './routes/epics/$slug'
 
+const WisdomRoute = WisdomRouteImport.update({
+  id: '/wisdom',
+  path: '/wisdom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EpicsRoute = EpicsRouteImport.update({
+  id: '/epics',
+  path: '/epics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EpicsSlugRoute = EpicsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => EpicsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/epics': typeof EpicsRouteWithChildren
+  '/wisdom': typeof WisdomRoute
+  '/epics/$slug': typeof EpicsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/epics': typeof EpicsRouteWithChildren
+  '/wisdom': typeof WisdomRoute
+  '/epics/$slug': typeof EpicsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/epics': typeof EpicsRouteWithChildren
+  '/wisdom': typeof WisdomRoute
+  '/epics/$slug': typeof EpicsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
+  id: '__root__' | '/' | '/about' | '/epics' | '/wisdom' | '/epics/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  EpicsRoute: typeof EpicsRouteWithChildren
+  WisdomRoute: typeof WisdomRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/wisdom': {
+      id: '/wisdom'
+      path: '/wisdom'
+      fullPath: '/wisdom'
+      preLoaderRoute: typeof WisdomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/epics': {
+      id: '/epics'
+      path: '/epics'
+      fullPath: '/epics'
+      preLoaderRoute: typeof EpicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +108,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/epics/$slug': {
+      id: '/epics/$slug'
+      path: '/$slug'
+      fullPath: '/epics/$slug'
+      preLoaderRoute: typeof EpicsSlugRouteImport
+      parentRoute: typeof EpicsRoute
+    }
   }
 }
 
+interface EpicsRouteChildren {
+  EpicsSlugRoute: typeof EpicsSlugRoute
+}
+
+const EpicsRouteChildren: EpicsRouteChildren = {
+  EpicsSlugRoute: EpicsSlugRoute,
+}
+
+const EpicsRouteWithChildren = EpicsRoute._addFileChildren(EpicsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  EpicsRoute: EpicsRouteWithChildren,
+  WisdomRoute: WisdomRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
