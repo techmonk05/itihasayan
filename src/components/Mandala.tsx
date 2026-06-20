@@ -1,3 +1,5 @@
+import { useState, useEffect, useRef } from "react";
+
 export function Mandala({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 600 600" className={className} aria-hidden="true">
@@ -22,15 +24,31 @@ export function Mandala({ className = "" }: { className?: string }) {
 }
 
 export function Particles() {
-  const particles = Array.from({ length: 28 });
+  const [mounted, setMounted] = useState(false);
+  const particlesRef = useRef<
+    { size: number; left: number; duration: number; delay: number; opacity: number }[]
+  >([]);
+
+  useEffect(() => {
+    // Generate random particle values only on the client, after mount —
+    // never during SSR. This avoids a server/client hydration mismatch,
+    // since Math.random() produces different values on each render pass.
+    particlesRef.current = Array.from({ length: 28 }).map(() => ({
+      size: 2 + Math.random() * 4,
+      left: Math.random() * 100,
+      duration: 14 + Math.random() * 22,
+      delay: Math.random() * -30,
+      opacity: 0.4 + Math.random() * 0.5,
+    }));
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return <div className="pointer-events-none absolute inset-0 overflow-hidden" />;
+
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((_, i) => {
-        const size = 2 + Math.random() * 4;
-        const left = Math.random() * 100;
-        const duration = 14 + Math.random() * 22;
-        const delay = Math.random() * -30;
-        const opacity = 0.4 + Math.random() * 0.5;
+      {particlesRef.current.map((p, i) => {
+        const { size, left, duration, delay, opacity } = p;
         return (
           <span
             key={i}

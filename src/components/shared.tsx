@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { DbEpic } from "../lib/supabase";
 import { patternComponents } from "./patterns";
+import { Link } from "@tanstack/react-router";
 
 export function PillTag({
   children,
