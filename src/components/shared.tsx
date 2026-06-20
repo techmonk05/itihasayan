@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "@tanstack/react-router";
 import type { DbEpic } from "../lib/supabase";
 import { patternComponents } from "./patterns";
 
