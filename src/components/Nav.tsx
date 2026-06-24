@@ -16,12 +16,12 @@ export function Nav() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 h-20 border-b border-gold/10 bg-background/80 backdrop-blur-md sm:h-24">
-        <div className="flex h-full w-full items-center justify-between gap-4 px-6 sm:px-10">
+        <div className="flex h-full w-full items-center justify-between gap-4 px-6 sm:px-2">
           <Link to="/" className="flex shrink-0 items-center gap-2.5">
             <img
-              src="/logo-full.png"
+              src="/logofull1.png"
               alt="Itihasayan bow and arrow mark"
-              className="h-12 w-auto object-contain sm:h-36  mt-10"
+              className="h-12 w-auto object-contain sm:h-64 mt-6"
             />
           </Link>
 
