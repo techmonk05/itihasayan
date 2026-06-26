@@ -21,7 +21,7 @@ export function Nav() {
             <img
               src="/logofull1.png"
               alt="Itihasayan bow and arrow mark"
-              className="mt-6 h-auto w-48 -ml-3 object-contain sm:mt-4 sm:ml-0 sm:h-64 sm:w-64"
+              className="mt-6 h-auto w-48 -ml-5 object-contain sm:mt-4 sm:ml-0 sm:h-64 sm:w-64"
             />
           </Link>
 
