@@ -21,7 +21,7 @@ export function Nav() {
             <img
               src="/logofull1.png"
               alt="Itihasayan bow and arrow mark"
-              className="h-12 w-auto object-contain sm:h-64 mt-6"
+              className="mt-10 h-auto w-72 object-contain sm:mt-4 sm:h-64 sm:w-64"
             />
           </Link>
 
@@ -56,7 +56,7 @@ export function Nav() {
 
       {/* Mobile slide-out menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[60] md:hidden">
+        <div className="fixed inset-0 z-60 md:hidden">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-background/60 backdrop-blur-sm"

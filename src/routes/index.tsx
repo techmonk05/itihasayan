@@ -31,7 +31,7 @@ function Hero() {
       <Particles />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 pb-24 pt-36 text-center sm:pt-44">
+      <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 pb-24 pt-24 text-center sm:pt-44">
         <p className="mb-6 text-xs uppercase tracking-[0.4em] text-gold/90 sm:text-sm">
           📜 Epics · Mythology · Ancient Wisdom · Bharat
         </p>
@@ -95,7 +95,7 @@ const hookCards = [
 
 function Hook() {
   return (
-    <section className="relative py-28 sm:py-36">
+    <section className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
           eyebrow="Did you know?"
@@ -147,7 +147,7 @@ const audience = [
 
 function Audience() {
   return (
-    <section className="relative py-28 sm:py-36">
+    <section className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
           eyebrow="For everyone"
@@ -178,7 +178,7 @@ function Audience() {
 
 function WisdomTeaser() {
   return (
-    <section className="relative py-28 sm:py-36">
+    <section className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <SectionHeading
           eyebrow="Wisdom verses"
@@ -211,7 +211,7 @@ function OneWordPrompt() {
   const [submitted, setSubmitted] = useState(false);
 
   return (
-    <section className="relative py-28 sm:py-36">
+    <section className="relative py-16 sm:py-24">
       <div className="mx-auto max-w-2xl px-6 text-center">
         <p className="text-xs uppercase tracking-[0.35em] text-gold/80">A quick question</p>
         <h2 className="mt-5 font-display text-3xl italic leading-tight text-ivory sm:text-4xl">
@@ -265,7 +265,7 @@ function OneWordPrompt() {
 
 function InstaCTA() {
   return (
-    <section className="relative overflow-hidden py-32 sm:py-40">
+    <section className="relative overflow-hidden py-16 sm:py-24">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <Mandala className="h-[120vmin] w-[120vmin] text-saffron/[0.06] animate-rotate-slow" />
       </div>
